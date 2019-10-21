@@ -11,46 +11,78 @@ from msrest.serialization import Model
 class Body(Model):
     """Body.
 
-    :param datafactory_name:
-    :type datafactory_name: str
-    :param pipeline_name:
-    :type pipeline_name: str
-    :param activity_name:
-    :type activity_name: str
-    :param cosmosdb_uri:
-    :type cosmosdb_uri: str
-    :param cosmosdb_database:
-    :type cosmosdb_database: str
-    :param container_name:
-    :type container_name: str
+    :param uri:
+    :type uri: str
     :param azure_storage_uri:
     :type azure_storage_uri: str
     :param filesystem_name:
     :type filesystem_name: str
     :param resource_set_path:
     :type resource_set_path: str
+    :param azure_sql_server_uri:
+    :type azure_sql_server_uri: str
+    :param database_name:
+    :type database_name: str
+    :param azure_sql_table_name:
+    :type azure_sql_table_name: str
+    :param azure_sql_column_name:
+    :type azure_sql_column_name: str
+    :param hostname:
+    :type hostname: str
+    :param file_path:
+    :type file_path: str
+    :param cosmosdb_uri:
+    :type cosmosdb_uri: str
+    :param cosmosdb_database:
+    :type cosmosdb_database: str
+    :param container_name:
+    :type container_name: str
+    :param datafactory_name:
+    :type datafactory_name: str
+    :param pipeline_name:
+    :type pipeline_name: str
+    :param activity_name:
+    :type activity_name: str
+    :param spark_activity_name:
+    :type spark_activity_name: str
     """
 
     _attribute_map = {
-        'datafactory_name': {'key': 'datafactory_name', 'type': 'str'},
-        'pipeline_name': {'key': 'pipeline_name', 'type': 'str'},
-        'activity_name': {'key': 'activity_name', 'type': 'str'},
-        'cosmosdb_uri': {'key': 'cosmosdb_uri', 'type': 'str'},
-        'cosmosdb_database': {'key': 'cosmosdb_database', 'type': 'str'},
-        'container_name': {'key': 'container_name', 'type': 'str'},
+        'uri': {'key': 'uri', 'type': 'str'},
         'azure_storage_uri': {'key': 'azure_storage_uri', 'type': 'str'},
         'filesystem_name': {'key': 'filesystem_name', 'type': 'str'},
         'resource_set_path': {'key': 'resource_set_path', 'type': 'str'},
+        'azure_sql_server_uri': {'key': 'azure_sql_server_uri', 'type': 'str'},
+        'database_name': {'key': 'database_name', 'type': 'str'},
+        'azure_sql_table_name': {'key': 'azure_sql_table_name', 'type': 'str'},
+        'azure_sql_column_name': {'key': 'azure_sql_column_name', 'type': 'str'},
+        'hostname': {'key': 'hostname', 'type': 'str'},
+        'file_path': {'key': 'file_path', 'type': 'str'},
+        'cosmosdb_uri': {'key': 'cosmosdb_uri', 'type': 'str'},
+        'cosmosdb_database': {'key': 'cosmosdb_database', 'type': 'str'},
+        'container_name': {'key': 'container_name', 'type': 'str'},
+        'datafactory_name': {'key': 'datafactory_name', 'type': 'str'},
+        'pipeline_name': {'key': 'pipeline_name', 'type': 'str'},
+        'activity_name': {'key': 'activity_name', 'type': 'str'},
+        'spark_activity_name': {'key': 'spark_activity_name', 'type': 'str'},
     }
 
     def __init__(self, **kwargs):
         super(Body, self).__init__(**kwargs)
-        self.datafactory_name = kwargs.get('datafactory_name', None)
-        self.pipeline_name = kwargs.get('pipeline_name', None)
-        self.activity_name = kwargs.get('activity_name', None)
-        self.cosmosdb_uri = kwargs.get('cosmosdb_uri', None)
-        self.cosmosdb_database = kwargs.get('cosmosdb_database', None)
-        self.container_name = kwargs.get('container_name', None)
+        self.uri = kwargs.get('uri', None)
         self.azure_storage_uri = kwargs.get('azure_storage_uri', None)
         self.filesystem_name = kwargs.get('filesystem_name', None)
         self.resource_set_path = kwargs.get('resource_set_path', None)
+        self.azure_sql_server_uri = kwargs.get('azure_sql_server_uri', None)
+        self.database_name = kwargs.get('database_name', None)
+        self.azure_sql_table_name = kwargs.get('azure_sql_table_name', None)
+        self.azure_sql_column_name = kwargs.get('azure_sql_column_name', None)
+        self.hostname = kwargs.get('hostname', None)
+        self.file_path = kwargs.get('file_path', None)
+        self.cosmosdb_uri = kwargs.get('cosmosdb_uri', None)
+        self.cosmosdb_database = kwargs.get('cosmosdb_database', None)
+        self.container_name = kwargs.get('container_name', None)
+        self.datafactory_name = kwargs.get('datafactory_name', None)
+        self.pipeline_name = kwargs.get('pipeline_name', None)
+        self.activity_name = kwargs.get('activity_name', None)
+        self.spark_activity_name = kwargs.get('spark_activity_name', None)

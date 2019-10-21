@@ -8,8 +8,8 @@
 from msrest.serialization import Model
 
 
-class Model1(Model):
-    """Model1.
+class QualifiedName(Model):
+    """QualifiedName.
 
     :param is_exists:
     :type is_exists: bool
@@ -32,7 +32,7 @@ class Model1(Model):
     }
 
     def __init__(self, *, is_exists: bool=None, qualified_name: str=None, guid=None, error_code: int=None, error_description: str=None, **kwargs) -> None:
-        super(Model1, self).__init__(**kwargs)
+        super(QualifiedName, self).__init__(**kwargs)
         self.is_exists = is_exists
         self.qualified_name = qualified_name
         self.guid = guid

@@ -8,8 +8,8 @@
 from msrest.serialization import Model
 
 
-class Model2(Model):
-    """Model2.
+class RequestDescription(Model):
+    """RequestDescription.
 
     :param pattern:
     :type pattern: str
@@ -29,7 +29,7 @@ class Model2(Model):
     }
 
     def __init__(self, **kwargs):
-        super(Model2, self).__init__(**kwargs)
+        super(RequestDescription, self).__init__(**kwargs)
         self.pattern = kwargs.get('pattern', None)
         self.input_parameters = kwargs.get('input_parameters', None)
         self.input_format = kwargs.get('input_format', None)
