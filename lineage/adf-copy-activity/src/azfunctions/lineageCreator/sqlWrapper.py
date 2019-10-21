@@ -18,9 +18,12 @@ class SqlWrapper:
         selectStatement = """
             SELECT 
                 r.clm_int_id as request_id,
-                d.clm_int_id as dataset_id,
+				clm_varchar_datafactory_name as datafactory_name,
+				clm_varchar_pipeline_name as pipeline_name,
+				clm_varchar_activity_name as activity_name,
                 clm_varchar_execution_start_time as execution_start_time,
                 clm_varchar_execution_end_time as execution_end_time,
+                d.clm_int_id as dataset_id,
                 d.clm_varchar_dataset as dataset,
                 d.clm_varchar_direction as direction,
                 d.clm_varchar_type as type,

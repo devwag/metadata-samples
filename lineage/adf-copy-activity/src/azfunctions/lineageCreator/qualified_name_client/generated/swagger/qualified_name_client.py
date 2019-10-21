@@ -115,7 +115,7 @@ class QualifiedNameClient(SDKClient):
         :param type_name:
         :type type_name: str
         :param body:
-        :type body: ~swagger.models.Model0
+        :type body: ~swagger.models.Body
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
@@ -145,7 +145,7 @@ class QualifiedNameClient(SDKClient):
 
         # Construct body
         if body is not None:
-            body_content = self._serialize.body(body, 'Model0')
+            body_content = self._serialize.body(body, 'Body')
         else:
             body_content = None
 

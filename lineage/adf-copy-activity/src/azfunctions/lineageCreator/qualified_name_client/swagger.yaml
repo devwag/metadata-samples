@@ -46,7 +46,10 @@ paths:
           name: body
           required: false
           schema:
-            $ref: '#/definitions/Model0'
+            allOf:
+              - $ref: '#/definitions/adf_copy_activity'
+              - $ref: '#/definitions/azure_cosmosdb_container'
+              - $ref: '#/definitions/azure_datalake_gen2_resource_set'
           x-examples:
             application/json: >-
               {"cosmosdb_uri":"test","cosmosdb_database":"db","container_name":"test"}
@@ -56,7 +59,7 @@ paths:
           schema:
             $ref: '#/definitions/Model1'
 definitions:
-  Model0:
+  azure_cosmosdb_container:
     properties:
       cosmosdb_uri:
         type: string
@@ -94,4 +97,20 @@ definitions:
       input_format:
         type: string
       description:
+        type: string
+  adf_copy_activity:
+    properties:
+      datafactory_name:
+        type: string
+      pipeline_name:
+        type: string
+      activity_name:
+        type: string        
+  azure_datalake_gen2_resource_set:
+    properties:
+      azure_storage_uri:
+        type: string
+      filesystem_name:
+        type: string
+      resource_set_path:
         type: string

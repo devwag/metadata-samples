@@ -8,8 +8,8 @@
 from msrest.serialization import Model
 
 
-class Model0(Model):
-    """Model0.
+class AzureCosmosdbContainer(Model):
+    """AzureCosmosdbContainer.
 
     :param cosmosdb_uri:
     :type cosmosdb_uri: str
@@ -25,8 +25,8 @@ class Model0(Model):
         'container_name': {'key': 'container_name', 'type': 'str'},
     }
 
-    def __init__(self, **kwargs):
-        super(Model0, self).__init__(**kwargs)
-        self.cosmosdb_uri = kwargs.get('cosmosdb_uri', None)
-        self.cosmosdb_database = kwargs.get('cosmosdb_database', None)
-        self.container_name = kwargs.get('container_name', None)
+    def __init__(self, *, cosmosdb_uri: str=None, cosmosdb_database: str=None, container_name: str=None, **kwargs) -> None:
+        super(AzureCosmosdbContainer, self).__init__(**kwargs)
+        self.cosmosdb_uri = cosmosdb_uri
+        self.cosmosdb_database = cosmosdb_database
+        self.container_name = container_name
