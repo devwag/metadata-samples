@@ -24,7 +24,7 @@ paths:
         '200':
           description: Definition generated from Swagger Inspector
           schema:
-            $ref: '#/definitions/Model2'
+            $ref: '#/definitions/RequestDescription'
     post:
       operationId: getQualifiedName
       consumes:
@@ -47,9 +47,23 @@ paths:
           required: false
           schema:
             allOf:
-              - $ref: '#/definitions/adf_copy_activity'
-              - $ref: '#/definitions/azure_cosmosdb_container'
+              - $ref: '#/definitions/azure_storage_service'
+              - $ref: '#/definitions/azure_datalake_gen2_filesystem'
               - $ref: '#/definitions/azure_datalake_gen2_resource_set'
+              - $ref: '#/definitions/tabular_schema'
+              - $ref: '#/definitions/azure_sql_server'
+              - $ref: '#/definitions/azure_sql_db'
+              - $ref: '#/definitions/azure_sql_table'
+              - $ref: '#/definitions/azure_sql_column'
+              - $ref: '#/definitions/file_server'
+              - $ref: '#/definitions/file_path'
+              - $ref: '#/definitions/file_path'
+              - $ref: '#/definitions/azure_cosmosdb_account'
+              - $ref: '#/definitions/azure_cosmosdb_database'
+              - $ref: '#/definitions/azure_cosmosdb_container'
+              - $ref: '#/definitions/adf_copy_activity'
+              - $ref: '#/definitions/adf_spark_activity'
+              
           x-examples:
             application/json: >-
               {"cosmosdb_uri":"test","cosmosdb_database":"db","container_name":"test"}
@@ -57,17 +71,9 @@ paths:
         '200':
           description: Definition generated from Swagger Inspector
           schema:
-            $ref: '#/definitions/Model1'
+            $ref: '#/definitions/QualifiedName'
 definitions:
-  azure_cosmosdb_container:
-    properties:
-      cosmosdb_uri:
-        type: string
-      cosmosdb_database:
-        type: string
-      container_name:
-        type: string
-  Model1:
+  QualifiedName:
     properties:
       isExists:
         type: boolean
@@ -86,7 +92,7 @@ definitions:
         type: string
       description:
         type: string
-  Model2:
+  RequestDescription:
     properties:
       pattern:
         type: string
@@ -98,14 +104,16 @@ definitions:
         type: string
       description:
         type: string
-  adf_copy_activity:
+  azure_storage_service:
     properties:
-      datafactory_name:
+      uri:
         type: string
-      pipeline_name:
+  azure_datalake_gen2_filesystem:
+    properties:
+      azure_storage_uri:
         type: string
-      activity_name:
-        type: string        
+      filesystem_name:
+        type: string
   azure_datalake_gen2_resource_set:
     properties:
       azure_storage_uri:
@@ -113,4 +121,84 @@ definitions:
       filesystem_name:
         type: string
       resource_set_path:
+        type: string
+  tabular_schema:
+    properties:
+      azure_storage_uri:
+        type: string
+      filesystem_name:
+        type: string
+      resource_set_path:
+        type: string
+  azure_sql_server:
+    properties:
+      uri:
+        type: string
+  azure_sql_db:
+    properties:
+      azure_sql_server_uri:
+        type: string
+      database_name:
+        type: string
+  azure_sql_table:
+    properties:
+      azure_sql_server_uri:
+        type: string
+      database_name:
+        type: string
+      azure_sql_table_name:
+        type: string
+  azure_sql_column:
+    properties:
+      azure_sql_server_uri:
+        type: string
+      database_name:
+        type: string
+      azure_sql_table_name:
+        type: string
+      azure_sql_column_name:
+        type: string
+  file_server:
+    properties:
+      hostname:
+        type: string
+  file_path:
+    properties:
+      hostname:
+        type: string
+      file_path:
+        type: string
+  azure_cosmosdb_account:
+    properties:
+      cosmosdb_uri:
+        type: string
+  azure_cosmosdb_database:
+    properties:
+      cosmosdb_uri:
+        type: string
+      cosmosdb_database:
+        type: string
+  azure_cosmosdb_container:
+    properties:
+      cosmosdb_uri:
+        type: string
+      cosmosdb_database:
+        type: string
+      container_name:
+        type: string
+  adf_copy_activity:
+    properties:
+      datafactory_name:
+        type: string
+      pipeline_name:
+        type: string
+      activity_name:
+        type: string
+  adf_spark_activity:
+    properties:
+      datafactory_name:
+        type: string
+      pipeline_name:
+        type: string
+      spark_activity_name:
         type: string

@@ -66,8 +66,9 @@ class QualifiedNameClient(SDKClient):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: Model2 or ClientRawResponse if raw=true
-        :rtype: ~swagger.models.Model2 or ~msrest.pipeline.ClientRawResponse
+        :return: RequestDescription or ClientRawResponse if raw=true
+        :rtype: ~swagger.models.RequestDescription or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`HttpOperationError<msrest.exceptions.HttpOperationError>`
         """
@@ -97,7 +98,7 @@ class QualifiedNameClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('Model2', response)
+            deserialized = self._deserialize('RequestDescription', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
@@ -121,8 +122,9 @@ class QualifiedNameClient(SDKClient):
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: Model1 or ClientRawResponse if raw=true
-        :rtype: ~swagger.models.Model1 or ~msrest.pipeline.ClientRawResponse
+        :return: QualifiedName or ClientRawResponse if raw=true
+        :rtype: ~swagger.models.QualifiedName or
+         ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`HttpOperationError<msrest.exceptions.HttpOperationError>`
         """
@@ -159,7 +161,7 @@ class QualifiedNameClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('Model1', response)
+            deserialized = self._deserialize('QualifiedName', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)

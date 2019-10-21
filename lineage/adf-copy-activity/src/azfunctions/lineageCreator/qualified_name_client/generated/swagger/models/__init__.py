@@ -6,28 +6,64 @@
 # --------------------------------------------------------------------------
 
 try:
-    from .azure_cosmosdb_container_py3 import AzureCosmosdbContainer
-    from .model1_py3 import Model1
+    from .qualified_name_py3 import QualifiedName
     from .input_parameters_py3 import InputParameters
-    from .model2_py3 import Model2
-    from .adf_copy_activity_py3 import AdfCopyActivity
+    from .request_description_py3 import RequestDescription
+    from .azure_storage_service_py3 import AzureStorageService
+    from .azure_datalake_gen2_filesystem_py3 import AzureDatalakeGen2Filesystem
     from .azure_datalake_gen2_resource_set_py3 import AzureDatalakeGen2ResourceSet
+    from .tabular_schema_py3 import TabularSchema
+    from .azure_sql_server_py3 import AzureSqlServer
+    from .azure_sql_db_py3 import AzureSqlDb
+    from .azure_sql_table_py3 import AzureSqlTable
+    from .azure_sql_column_py3 import AzureSqlColumn
+    from .file_server_py3 import FileServer
+    from .file_path_py3 import FilePath
+    from .azure_cosmosdb_account_py3 import AzureCosmosdbAccount
+    from .azure_cosmosdb_database_py3 import AzureCosmosdbDatabase
+    from .azure_cosmosdb_container_py3 import AzureCosmosdbContainer
+    from .adf_copy_activity_py3 import AdfCopyActivity
+    from .adf_spark_activity_py3 import AdfSparkActivity
     from .body_py3 import Body
 except (SyntaxError, ImportError):
-    from .azure_cosmosdb_container import AzureCosmosdbContainer
-    from .model1 import Model1
+    from .qualified_name import QualifiedName
     from .input_parameters import InputParameters
-    from .model2 import Model2
-    from .adf_copy_activity import AdfCopyActivity
+    from .request_description import RequestDescription
+    from .azure_storage_service import AzureStorageService
+    from .azure_datalake_gen2_filesystem import AzureDatalakeGen2Filesystem
     from .azure_datalake_gen2_resource_set import AzureDatalakeGen2ResourceSet
+    from .tabular_schema import TabularSchema
+    from .azure_sql_server import AzureSqlServer
+    from .azure_sql_db import AzureSqlDb
+    from .azure_sql_table import AzureSqlTable
+    from .azure_sql_column import AzureSqlColumn
+    from .file_server import FileServer
+    from .file_path import FilePath
+    from .azure_cosmosdb_account import AzureCosmosdbAccount
+    from .azure_cosmosdb_database import AzureCosmosdbDatabase
+    from .azure_cosmosdb_container import AzureCosmosdbContainer
+    from .adf_copy_activity import AdfCopyActivity
+    from .adf_spark_activity import AdfSparkActivity
     from .body import Body
 
 __all__ = [
-    'AzureCosmosdbContainer',
-    'Model1',
+    'QualifiedName',
     'InputParameters',
-    'Model2',
-    'AdfCopyActivity',
+    'RequestDescription',
+    'AzureStorageService',
+    'AzureDatalakeGen2Filesystem',
     'AzureDatalakeGen2ResourceSet',
+    'TabularSchema',
+    'AzureSqlServer',
+    'AzureSqlDb',
+    'AzureSqlTable',
+    'AzureSqlColumn',
+    'FileServer',
+    'FilePath',
+    'AzureCosmosdbAccount',
+    'AzureCosmosdbDatabase',
+    'AzureCosmosdbContainer',
+    'AdfCopyActivity',
+    'AdfSparkActivity',
     'Body',
 ]
