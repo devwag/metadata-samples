@@ -1,0 +1,17 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "adftolinegegenerator_STORAGE": "DefaultEndpointsProtocol=https;AccountName=<AccountName>;AccountKey=<AccountKey>;EndpointSuffix=core.windows.net"
+
+    "qualifiedNameServiceUrl": "https://metadata-services.azurewebsites.net/",
+    "jsonGeneratorServiceUrl": "https://atlas-json-creator.azurewebsites.net",
+    "qualifiedNameServiceKey": "<key>",
+    
+    "sql_server": "gbssqlserver.database.windows.net",
+    "sql_database": "gbssqldb",
+    "sql_login": "sqldwadmin",
+    "sql_password": "<password>"
+  }
+}

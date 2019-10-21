@@ -1,0 +1,121 @@
+swagger: '2.0'
+info:
+  description: defaultDescription
+  version: '0.1'
+  title: JsonGeneratorClient
+paths:
+  /api/atlas_relationships_create:
+    post:
+      operationId: createLineage
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Model0'
+          x-examples:
+            application/json: >-
+              [{"end1": {"guid": "e6e61138-acd9-48c4-bcb3-28696bfb5adc",
+              "typeName": "azure_cosmosdb_account", "uniqueAttributes": {}},
+              "end2": {"guid": "5932beae-352d-414d-b09f-7e522a4d6456",
+              "typeName": "azure_cosmosdb_database", "uniqueAttributes": {}},
+              "homeId": "3de748df-f73d-43e7-8d50-0331f17d9457", "label": "Azure
+              Cosmos DB Account to Azure Cosmos DB Database", "status":
+              "ACTIVE", "typeName": "cosmosdb_account_database", "name":
+              "relationshipbetweencosmosaccountanddb"}]
+      responses:
+        '200':
+          description: Definition generated from Swagger Inspector
+          schema:
+            $ref: '#/definitions/Model1'
+definitions:
+  UniqueAttributes: {}
+  End1:
+    properties:
+      guid:
+        type: string
+      typeName:
+        type: string
+      uniqueAttributes:
+        $ref: '#/definitions/UniqueAttributes'
+  End2_UniqueAttributes: {}
+  End2:
+    properties:
+      guid:
+        type: string
+      typeName:
+        type: string
+      uniqueAttributes:
+        $ref: '#/definitions/End2_UniqueAttributes'
+  Array:
+    properties:
+      end1:
+        $ref: '#/definitions/End1'
+      end2:
+        $ref: '#/definitions/End2'
+      homeId:
+        type: string
+      label:
+        type: string
+      status:
+        type: string
+      typeName:
+        type: string
+      name:
+        type: string
+  Model0:
+    type: array
+    items:
+      $ref: '#/definitions/Array'
+  Model1_Array_End1_UniqueAttributes: {}
+  Model1_Array_End1:
+    properties:
+      guid:
+        type: string
+      typeName:
+        type: string
+      uniqueAttributes:
+        $ref: '#/definitions/Model1_Array_End1_UniqueAttributes'
+  Model1_Array_End2_UniqueAttributes: {}
+  Model1_Array_End2:
+    properties:
+      guid:
+        type: string
+      typeName:
+        type: string
+      uniqueAttributes:
+        $ref: '#/definitions/Model1_Array_End2_UniqueAttributes'
+  Model1_Array:
+    properties:
+      name:
+        type: string
+      end1:
+        $ref: '#/definitions/Model1_Array_End1'
+      end2:
+        $ref: '#/definitions/Model1_Array_End2'
+      typeName:
+        type: string
+      createTime:
+        type: integer
+        format: int32
+      createdBy:
+        type: string
+      homeId:
+        type: string
+      label:
+        type: string
+      status:
+        type: string
+      updateTime:
+        type: integer
+        format: int32
+      updatedBy:
+        type: string
+  Model1:
+    type: array
+    items:
+      $ref: '#/definitions/Model1_Array'
