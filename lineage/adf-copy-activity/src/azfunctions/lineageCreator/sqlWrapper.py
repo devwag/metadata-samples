@@ -40,12 +40,14 @@ class SqlWrapper:
         
     def deleteRequests(self, requestIds):
 
+        parameters = ', '.join('?' * len(requestIds))
+
         deleteStatement = """
             DELETE FROM [dbo].[tbl_lineage_request]
             WHERE clm_int_id in (%s)
-            """ % ', '.join([str(i) for i in requestIds])
+            """ % parameters
 
         cursor = self.connection.cursor()
-        cursor.execute(deleteStatement)
+        cursor.execute(deleteStatement, requestIds)
 
         self.connection.commit()
