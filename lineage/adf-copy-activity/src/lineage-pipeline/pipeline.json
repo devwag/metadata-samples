@@ -1,18 +1,11 @@
 {
-    "name": "CreateLineage",
+    "name": "CreateLineageSp",
     "properties": {
         "activities": [
             {
-                "name": "PostQueueMessage",
-                "type": "WebActivity",
-                "dependsOn": [
-                    {
-                        "activity": "BuildMessageText",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
+                "name": "Execute sp",
+                "type": "SqlServerStoredProcedure",
+                "dependsOn": [],
                 "policy": {
                     "timeout": "7.00:00:00",
                     "retry": 0,
@@ -22,59 +15,133 @@
                 },
                 "userProperties": [],
                 "typeProperties": {
-                    "url": "https://<STORAGE-ACCOUNT>.queue.core.windows.net/lineagerequest/messages",
-                    "method": "POST",
-                    "headers": {
-                        "x-ms-version": "2019-02-02"
-                    },
-                    "body": {
-                        "value": "<QueueMessage>\n<MessageText>\n@{base64(variables('MessageText'))}\n</MessageText>  \n</QueueMessage>",
-                        "type": "Expression"
-                    },
-                    "authentication": {
-                        "type": "MSI",
-                        "resource": "https://<STORAGE-ACCOUNT>.queue.core.windows.net/"
+                    "storedProcedureName": "[dbo].[sp_create_lineage]",
+                    "storedProcedureParameters": {
+                        "activity_name": {
+                            "value": {
+                                "value": "@pipeline().parameters.ActivityName",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "datafactory_name": {
+                            "value": {
+                                "value": "@pipeline().DataFactory",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "pipeline_name": {
+                            "value": {
+                                "value": "@pipeline().parameters.PipelineName",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "destination_azure_resource": {
+                            "value": {
+                                "value": "@pipeline().parameters.DestinationAzureResource",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "destination_dataset": {
+                            "value": {
+                                "value": "@pipeline().parameters.DestinationDataset",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "destination_type": {
+                            "value": {
+                                "value": "@pipeline().parameters.DestinationType",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "execution_end_time": {
+                            "value": {
+                                "value": "@pipeline().parameters.ExecutionEndTime",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "execution_start_time": {
+                            "value": {
+                                "value": "@pipeline().parameters.ExecutionStartTime",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "source_azure_resource": {
+                            "value": {
+                                "value": "@pipeline().parameters.SourceAzureResource",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "source_dataset": {
+                            "value": {
+                                "value": "@pipeline().parameters.SourceDataset",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        },
+                        "source_type": {
+                            "value": {
+                                "value": "@pipeline().parameters.SourceType",
+                                "type": "Expression"
+                            },
+                            "type": "String"
+                        }
                     }
-                }
-            },
-            {
-                "name": "BuildMessageText",
-                "type": "SetVariable",
-                "dependsOn": [],
-                "userProperties": [],
-                "typeProperties": {
-                    "variableName": "MessageText",
-                    "value": {
-                        "value": "{\n\"ExecutionStartTime\":\"@{pipeline().parameters.ExecutionStartTime}\",\n\"ExecutionEndTime\":\"@{pipeline().parameters.ExecutionEndTime}\",\n\"Sources\": [\n  {\"Dataset\":\"@{pipeline().parameters.SourceDataset}\",\n  \"Type\":\"@{pipeline().parameters.SourceType}\",\n  \"AzureResource\":\"@{pipeline().parameters.SourceAzureResource}\"}\n],\n\"Destinations\": [\n  {\"Dataset\":\"@{pipeline().parameters.DestinationDataset}\",\n  \"Type\":\"@{pipeline().parameters.DestinationType}\",\n  \"AzureResource\":\"@{pipeline().parameters.DestinationAzureResource}\"}\n]\n}",
-                        "type": "Expression"
-                    }
+                },
+                "linkedServiceName": {
+                    "referenceName": "adftolineagegenerator",
+                    "type": "LinkedServiceReference"
                 }
             }
         ],
         "parameters": {
             "ExecutionStartTime": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "2019-10-16T04:25:35.1798808Z"
             },
             "ExecutionEndTime": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "2019-10-16T04:25:50.1452973Z"
             },
             "SourceDataset": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "OneFile"
             },
             "SourceType": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "azure_cosmosdb_container"
             },
             "SourceAzureResource": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "https://adfatlasac92.cosmos.windows.net/gbssampledata/somecontainer"
             },
             "DestinationDataset": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "salesadlsv2"
             },
             "DestinationType": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "azure_datalake_gen2_resource_set"
             },
             "DestinationAzureResource": {
-                "type": "string"
+                "type": "string",
+                "defaultValue": "https://adfatlasac92.blob.core.windows.net/filesys/2019/01/02"
+            },
+            "PipelineName": {
+                "type": "string",
+                "defaultValue": "pipelineName"
+            },
+            "ActivityName": {
+                "type": "string",
+                "defaultValue": "ActivityName"
             }
         },
         "variables": {

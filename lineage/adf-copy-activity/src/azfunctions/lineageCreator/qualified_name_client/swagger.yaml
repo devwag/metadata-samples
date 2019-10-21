@@ -1,0 +1,116 @@
+swagger: '2.0'
+info:
+  description: defaultDescription
+  version: '0.1'
+  title: QualifiedNameClient
+paths:
+  /api/metadata-qualifiedname-service:
+    get:
+      operationId: getRequestFormat
+      produces:
+        - application/json
+      parameters:
+        - name: code
+          in: query
+          required: false
+          type: string
+          x-example: DCJoZnzNKZ4teDSPicw5578a9xhPTKXbcqqDuOzi9XIWtbtzcCxZbw
+        - name: typeName
+          in: query
+          required: false
+          type: string
+          x-example: azure_cosmosdb_container
+      responses:
+        '200':
+          description: Definition generated from Swagger Inspector
+          schema:
+            $ref: '#/definitions/Model2'
+    post:
+      operationId: getQualifiedName
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: code
+          in: query
+          required: false
+          type: string
+          x-example: DCJoZnzNKZ4teDSPicw5578a9xhPTKXbcqqDuOzi9XIWtbtzcCxZbw
+        - name: typeName
+          in: query
+          required: false
+          type: string
+          x-example: azure_cosmosdb_container
+        - in: body
+          name: body
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/definitions/adf_copy_activity'
+              - $ref: '#/definitions/azure_cosmosdb_container'
+              - $ref: '#/definitions/azure_datalake_gen2_resource_set'
+          x-examples:
+            application/json: >-
+              {"cosmosdb_uri":"test","cosmosdb_database":"db","container_name":"test"}
+      responses:
+        '200':
+          description: Definition generated from Swagger Inspector
+          schema:
+            $ref: '#/definitions/Model1'
+definitions:
+  azure_cosmosdb_container:
+    properties:
+      cosmosdb_uri:
+        type: string
+      cosmosdb_database:
+        type: string
+      container_name:
+        type: string
+  Model1:
+    properties:
+      isExists:
+        type: boolean
+      qualifiedName:
+        type: string
+      guid:
+        type: object
+      error_code:
+        type: integer
+        format: int32
+      error_description:
+        type: string
+  Input_parameters:
+    properties:
+      param_name:
+        type: string
+      description:
+        type: string
+  Model2:
+    properties:
+      pattern:
+        type: string
+      input_parameters:
+        type: array
+        items:
+          $ref: '#/definitions/Input_parameters'
+      input_format:
+        type: string
+      description:
+        type: string
+  adf_copy_activity:
+    properties:
+      datafactory_name:
+        type: string
+      pipeline_name:
+        type: string
+      activity_name:
+        type: string        
+  azure_datalake_gen2_resource_set:
+    properties:
+      azure_storage_uri:
+        type: string
+      filesystem_name:
+        type: string
+      resource_set_path:
+        type: string
