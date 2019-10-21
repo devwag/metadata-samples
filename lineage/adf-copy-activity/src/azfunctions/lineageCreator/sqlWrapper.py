@@ -4,7 +4,10 @@ import os
 
 class SqlWrapper:
     def __init__(self, config):
-        self.connection = pyodbc.connect("Driver={SQL Server Native Client 11.0};"
+        logging.info('Connecting to SQL db %s at %s as %s' % 
+            (config['sql_database'], config['sql_server'], config['sql_login']))
+
+        self.connection = pyodbc.connect("Driver={ODBC Driver 17 for SQL Server};"
                             "Server=%s;Database=%s;uid=%s;pwd=%s;" % 
                             (
                                 config['sql_server'],
@@ -39,6 +42,8 @@ class SqlWrapper:
         results = [dict(zip([column[0] for column in cursor.description], row))
                 for row in cursor.fetchall()]
 
+        logging.info('%d dataset records loaded from the SQL DB', len(results))
+
         return results
         
     def deleteRequests(self, requestIds):
@@ -54,3 +59,5 @@ class SqlWrapper:
         cursor.execute(deleteStatement, requestIds)
 
         self.connection.commit()
+
+        logging.info('%d lineage requests deleted from the SQL DB', len(requestIds))

@@ -13,6 +13,6 @@ def main(timer: func.TimerRequest) -> None:
     if timer.past_due:
         logging.info('The timer is past due!')
 
-    LineageEventProcessor(os.environ).scanEvents()
-
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
+
+    LineageEventProcessor(os.environ).scanEvents()
