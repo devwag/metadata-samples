@@ -1,0 +1,9 @@
+# Create a terraform.tfvars file and replace the below values 
+
+resource_group_name = <Insert resource group name>
+location = <Insert location> # Defaults to East US2
+sql_username = <Insert sql_username>
+sql_password = <Insert sql_password>
+adls_name = <Insert adls name>
+acr_name = <Insert acr name>
+keyvault_name = <Insert keyvault name>

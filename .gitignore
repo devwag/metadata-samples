@@ -5,3 +5,18 @@
 /.vs
 *.pyc
 **/.vscode
+
+.idea
+.python_packages
+.vscode
+.DS_Store
+
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Custom variable files
+*.tfvars
