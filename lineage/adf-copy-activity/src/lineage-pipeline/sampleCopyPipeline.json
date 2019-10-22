@@ -18,8 +18,11 @@
                     "source": {
                         "type": "DelimitedTextSource",
                         "storeSettings": {
-                            "type": "AzureBlobStorageReadSettings",
-                            "recursive": true
+                            "type": "AzureBlobFSReadSettings",
+                            "recursive": true,
+                            "wildcardFolderPath": "*",
+                            "wildcardFileName": "*.*",
+                            "enablePartitionDiscovery": false
                         },
                         "formatSettings": {
                             "type": "DelimitedTextReadSettings"
@@ -36,36 +39,11 @@
                             "fileExtension": ".txt"
                         }
                     },
-                    "enableStaging": false,
-                    "translator": {
-                        "type": "TabularTranslator",
-                        "mappings": [
-                            {
-                                "source": {
-                                    "name": "CustomerID",
-                                    "type": "String"
-                                },
-                                "sink": {
-                                    "name": "CustomerID",
-                                    "type": "String"
-                                }
-                            },
-                            {
-                                "source": {
-                                    "name": "Discount",
-                                    "type": "String"
-                                },
-                                "sink": {
-                                    "name": "Discount",
-                                    "type": "Double"
-                                }
-                            }
-                        ]
-                    }
+                    "enableStaging": false
                 },
                 "inputs": [
                     {
-                        "referenceName": "OneFile",
+                        "referenceName": "SampleAdlsSource",
                         "type": "DatasetReference"
                     }
                 ],
@@ -95,20 +73,103 @@
                     },
                     "waitOnCompletion": true,
                     "parameters": {
-                        "ExecutionStartTime": "2019-10-16T04:25:35.1798808Z",
-                        "ExecutionEndTime": "2019-10-16T04:25:50.1452973Z",
-                        "SourceDataset": "OneFile",
-                        "SourceType": "azure_cosmosdb_container",
-                        "SourceAzureResource": "https://adfatlasac92.cosmos.windows.net/gbssampledata/somecontainer",
-                        "DestinationDataset": "destfromactivity",
-                        "DestinationType": "azure_datalake_gen2_resource_set",
-                        "DestinationAzureResource": "https://adfatlasac92.blob.core.windows.net/filesys/2019/01/02",
+                        "ExecutionStartTime": {
+                            "value": "@{activity('Copy Data1').ExecutionStartTime}",
+                            "type": "Expression"
+                        },
+                        "ExecutionEndTime": "@{activity('Copy Data1').ExecutionEndTime}",
+                        "SourceDataset": "SampleAdlsSource",
+                        "SourceType": "azure_datalake_gen2_resource_set",
+                        "SourceAzureResource": "https://beamdatav2.dfs.core.windows.net/sales/2019/8/20/0/0/sales-201982000.csv",
+                        "DestinationDataset": "salesadlsv2",
+                        "DestinationType": "azure_datalake_gen2_filesystem",
+                        "DestinationAzureResource": "https://beamdatav2.dfs.core.windows.net/salesv2",
                         "PipelineName": {
                             "value": "@pipeline().Pipeline",
                             "type": "Expression"
                         },
                         "ActivityName": {
                             "value": "Copy Data1",
+                            "type": "Expression"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Copy SQL to ADLS",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "SqlDWSource"
+                    },
+                    "sink": {
+                        "type": "DelimitedTextSink",
+                        "storeSettings": {
+                            "type": "AzureBlobFSWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "DelimitedTextWriteSettings",
+                            "quoteAllText": true,
+                            "fileExtension": ".txt"
+                        }
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "AzureSqlDWTable1",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "salesadlsv2",
+                        "type": "DatasetReference"
+                    }
+                ]
+            },
+            {
+                "name": "Report Sql2AdlsCopy Lineage",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Copy SQL to ADLS",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "CreateLineageSp",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "ExecutionStartTime": "@{activity('Copy SQL to ADLS').ExecutionStartTime}",
+                        "ExecutionEndTime": "@{activity('Copy SQL to ADLS').ExecutionEndTime}",
+                        "SourceDataset": "AzureSqlDWTable1",
+                        "SourceType": "azure_sql_table",
+                        "SourceAzureResource": "https://gbssqlserver.database.windows.net/gbssqldw/salesv2",
+                        "DestinationDataset": "salesadlsv2",
+                        "DestinationType": "azure_datalake_gen2_filesystem",
+                        "DestinationAzureResource": "https://beamdatav2.dfs.core.windows.net/salesv2",
+                        "PipelineName": {
+                            "value": "@pipeline().Pipeline",
+                            "type": "Expression"
+                        },
+                        "ActivityName": {
+                            "value": "Copy SQL to ADLS",
                             "type": "Expression"
                         }
                     }

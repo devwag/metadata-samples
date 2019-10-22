@@ -1,5 +1,6 @@
 import uuid
 import logging
+import json
 
 from .qualified_name_client.generated.swagger.qualified_name_client import QualifiedNameClient
 from .json_generator_client.generated.swagger.json_generator_client import JsonGeneratorClient
@@ -22,7 +23,7 @@ class LineageEventProcessor:
 
         lineageRequests = self._buildLineageRequests(datasets)
 
-        self._reportLineage(lineageRequests)
+        self._reportActivities(lineageRequests)
 
         #self._deleteRequests(lineageRequests) #keep the records while debuging
 
@@ -39,6 +40,8 @@ class LineageEventProcessor:
                     'datafactory_name' : dataset['datafactory_name'],
                     'pipeline_name' : dataset['pipeline_name'],
                     'activity_name' : dataset['activity_name'],
+                    'execution_start_time' :dataset['execution_start_time'],
+                    'execution_end_time' :dataset['execution_end_time'],
                     'sources' : [], 
                     'destinations' : [], 
                     'valid': False 
@@ -94,27 +97,51 @@ class LineageEventProcessor:
 
         return lineageRequests
 
-    def _reportLineage(self, lineageRequests):
-        client = self.restFactory.getJsonGeneratorClient()
+    def _reportActivities(self, lineageRequests):
         for lineageRequest in lineageRequests.values():
             #if not lineageRequest['valid']: continue todo: enable when types are available
-
-            inputs = [Inputs(guid=s['guid'], type_name=s['type']) for s in lineageRequest['sources']]
-            outputs = [Outputs(guid=s['guid'], type_name=s['type']) for s in lineageRequest['destinations']]
-
-            request = Request(
-                name=lineageRequest['activity_name'], 
-                type_name='adf_copy_activity', 
-                qualified_name=lineageRequest['qualified_name'], 
-                created_by='ADF', 
-                inputs=inputs, 
-                outputs=outputs)
-
-            response = client.create_lineage_data(body=request)
-
-            lineageRequest['lineageData'] = response
+            self._reportActivity(lineageRequest)
 
         logging.info('%d lineage requests processed', len(lineageRequests))
+
+    def _reportActivity(self, lineageRequest):
+        jsonClient = self.restFactory.getJsonGeneratorClient()
+        metadataClient = self.restFactory.getMetadataClient()
+
+        process_attributes = [
+            {
+                'attr_name': 'StartTime',
+                'attr_value': lineageRequest['execution_start_time'],
+                'is_entityref': False
+            },
+            {
+                'attr_name': 'EndTime',
+                'attr_value': lineageRequest['execution_end_time'],
+                'is_entityref': False
+            }
+        ]
+
+        inputs = [Inputs(guid=s['guid'], type_name=s['type']) for s in lineageRequest['sources']]
+        outputs = [Outputs(guid=s['guid'], type_name=s['type']) for s in lineageRequest['destinations']]
+
+        request = Request(
+            name=lineageRequest['activity_name'], 
+            type_name='adf_copy_activity', 
+            qualified_name=lineageRequest['qualified_name'], 
+            created_by='ADF', 
+            process_attributes=process_attributes,
+            inputs=inputs, 
+            outputs=outputs)
+
+        response = jsonClient.create_lineage_data(body=request)
+
+        lineageRequest['lineageData'] = response
+
+        response.entities[0].guid = lineageRequest['guid'] # json generator doesn't support it yet, do ity here manually
+
+        metadataRequest = json.dumps(response, default=lambda o: o.__dict__)
+
+        response = metadataClient.entity_post_using_post(metadataRequest)
 
     def _deleteRequests(self, lineageRequests):
         ids = [id for id in lineageRequests.keys()]
