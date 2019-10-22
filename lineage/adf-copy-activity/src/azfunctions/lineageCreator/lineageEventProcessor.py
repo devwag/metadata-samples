@@ -59,6 +59,9 @@ class LineageEventProcessor:
                     if qn.is_exists:
                         dataset["guid"] = qn.guid
                         lineageRequests[requestId]['valid'] = True
+                    else:
+                        logging.error('Type "%s" does not exist in the Qualified Service' % dataset['type'])
+
             except Exception as e:
                 logging.error('Error processing request %s: %s' % (requestId, e))
 
@@ -81,11 +84,13 @@ class LineageEventProcessor:
                 lineageRequest['guid'] = qn.guid
             else:
                 lineageRequest['valid'] = False
+                logging.error('Type "adf_copy_activity" does not exist in the Qualified Service')
 
         return lineageRequests
 
     def _reportLineage(self, lineageRequests):
-        pass
+        client = self.restFactory.getJsonGeneratorClient()
+        logging.info('%d lineage requests processed', len(lineageRequests))
 
     def _deleteRequests(self, lineageRequests):
         ids = [id for id in lineageRequests.keys()]
