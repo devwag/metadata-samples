@@ -6,25 +6,34 @@
 # --------------------------------------------------------------------------
 
 try:
-    from .end1_py3 import End1
-    from .end2_py3 import End2
-    from .array_py3 import Array
-    from .model1_array_end1_py3 import Model1ArrayEnd1
-    from .model1_array_end2_py3 import Model1ArrayEnd2
-    from .model1_array_py3 import Model1Array
+    from .process_attributes_py3 import ProcessAttributes
+    from .inputs_py3 import Inputs
+    from .outputs_py3 import Outputs
+    from .request_py3 import Request
+    from .attributes_inputs_py3 import AttributesInputs
+    from .attributes_outputs_py3 import AttributesOutputs
+    from .attributes_py3 import Attributes
+    from .entities_py3 import Entities
+    from .response_py3 import Response
 except (SyntaxError, ImportError):
-    from .end1 import End1
-    from .end2 import End2
-    from .array import Array
-    from .model1_array_end1 import Model1ArrayEnd1
-    from .model1_array_end2 import Model1ArrayEnd2
-    from .model1_array import Model1Array
+    from .process_attributes import ProcessAttributes
+    from .inputs import Inputs
+    from .outputs import Outputs
+    from .request import Request
+    from .attributes_inputs import AttributesInputs
+    from .attributes_outputs import AttributesOutputs
+    from .attributes import Attributes
+    from .entities import Entities
+    from .response import Response
 
 __all__ = [
-    'End1',
-    'End2',
-    'Array',
-    'Model1ArrayEnd1',
-    'Model1ArrayEnd2',
-    'Model1Array',
+    'ProcessAttributes',
+    'Inputs',
+    'Outputs',
+    'Request',
+    'AttributesInputs',
+    'AttributesOutputs',
+    'Attributes',
+    'Entities',
+    'Response',
 ]

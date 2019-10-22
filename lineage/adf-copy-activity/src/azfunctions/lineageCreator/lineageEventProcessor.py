@@ -1,11 +1,15 @@
+import uuid
 import logging
 
 from .qualified_name_client.generated.swagger.qualified_name_client import QualifiedNameClient
 from .json_generator_client.generated.swagger.json_generator_client import JsonGeneratorClient
+
 from .restFactory import RestFactory
 from .sqlWrapper import SqlWrapper
 from .qnRequestBuilder import buildDatasetQNRequest
+
 from .qualified_name_client.generated.swagger.models.adf_copy_activity_py3 import AdfCopyActivity
+from .json_generator_client.generated.swagger.models import Request, Response, Inputs, Outputs
 
 class LineageEventProcessor:
     def __init__(self, config):
@@ -20,7 +24,7 @@ class LineageEventProcessor:
 
         self._reportLineage(lineageRequests)
 
-        ##self._deleteRequests(lineageRequests) keep the records while debuging
+        #self._deleteRequests(lineageRequests) #keep the records while debuging
 
     def _buildLineageRequests(self, datasets):
         lineageRequests = {}
@@ -61,6 +65,7 @@ class LineageEventProcessor:
                         lineageRequests[requestId]['valid'] = True
                     else:
                         logging.error('Type "%s" does not exist in the Qualified Service' % dataset['type'])
+                        dataset["guid"] = str(uuid.uuid4()) # for debugging
 
             except Exception as e:
                 logging.error('Error processing request %s: %s' % (requestId, e))
@@ -85,11 +90,30 @@ class LineageEventProcessor:
             else:
                 lineageRequest['valid'] = False
                 logging.error('Type "adf_copy_activity" does not exist in the Qualified Service')
+                lineageRequest['guid'] = str(uuid.uuid4()) # for debugging
 
         return lineageRequests
 
     def _reportLineage(self, lineageRequests):
         client = self.restFactory.getJsonGeneratorClient()
+        for lineageRequest in lineageRequests.values():
+            #if not lineageRequest['valid']: continue todo: enable when types are available
+
+            inputs = [Inputs(guid=s['guid'], type_name=s['type']) for s in lineageRequest['sources']]
+            outputs = [Outputs(guid=s['guid'], type_name=s['type']) for s in lineageRequest['destinations']]
+
+            request = Request(
+                name=lineageRequest['activity_name'], 
+                type_name='adf_copy_activity', 
+                qualified_name=lineageRequest['qualified_name'], 
+                created_by='ADF', 
+                inputs=inputs, 
+                outputs=outputs)
+
+            response = client.create_lineage_data(body=request)
+
+            lineageRequest['lineageData'] = response
+
         logging.info('%d lineage requests processed', len(lineageRequests))
 
     def _deleteRequests(self, lineageRequests):

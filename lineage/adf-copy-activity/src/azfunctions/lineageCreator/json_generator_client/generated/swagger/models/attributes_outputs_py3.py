@@ -8,25 +8,21 @@
 from msrest.serialization import Model
 
 
-class End2(Model):
-    """End2.
+class AttributesOutputs(Model):
+    """AttributesOutputs.
 
     :param guid:
     :type guid: str
     :param type_name:
     :type type_name: str
-    :param unique_attributes:
-    :type unique_attributes: object
     """
 
     _attribute_map = {
         'guid': {'key': 'guid', 'type': 'str'},
         'type_name': {'key': 'typeName', 'type': 'str'},
-        'unique_attributes': {'key': 'uniqueAttributes', 'type': 'object'},
     }
 
-    def __init__(self, *, guid: str=None, type_name: str=None, unique_attributes=None, **kwargs) -> None:
-        super(End2, self).__init__(**kwargs)
+    def __init__(self, *, guid: str=None, type_name: str=None, **kwargs) -> None:
+        super(AttributesOutputs, self).__init__(**kwargs)
         self.guid = guid
         self.type_name = type_name
-        self.unique_attributes = unique_attributes

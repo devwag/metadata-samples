@@ -53,25 +53,24 @@ class JsonGeneratorClient(SDKClient):
         self._deserialize = Deserializer(client_models)
 
 
-    def create_lineage(
+    def create_lineage_data(
             self, body=None, custom_headers=None, raw=False, **operation_config):
         """
 
         :param body:
-        :type body: list[~swagger.models.Array]
+        :type body: ~swagger.models.Request
         :param dict custom_headers: headers that will be added to the request
         :param bool raw: returns the direct response alongside the
          deserialized response
         :param operation_config: :ref:`Operation configuration
          overrides<msrest:optionsforoperations>`.
-        :return: list or ClientRawResponse if raw=true
-        :rtype: list[~swagger.models.Model1Array] or
-         ~msrest.pipeline.ClientRawResponse
+        :return: Response or ClientRawResponse if raw=true
+        :rtype: ~swagger.models.Response or ~msrest.pipeline.ClientRawResponse
         :raises:
          :class:`HttpOperationError<msrest.exceptions.HttpOperationError>`
         """
         # Construct URL
-        url = self.create_lineage.metadata['url']
+        url = self.create_lineage_data.metadata['url']
 
         # Construct parameters
         query_parameters = {}
@@ -85,7 +84,7 @@ class JsonGeneratorClient(SDKClient):
 
         # Construct body
         if body is not None:
-            body_content = self._serialize.body(body, '[Array]')
+            body_content = self._serialize.body(body, 'Request')
         else:
             body_content = None
 
@@ -99,11 +98,11 @@ class JsonGeneratorClient(SDKClient):
         deserialized = None
 
         if response.status_code == 200:
-            deserialized = self._deserialize('[Model1Array]', response)
+            deserialized = self._deserialize('Response', response)
 
         if raw:
             client_raw_response = ClientRawResponse(deserialized, response)
             return client_raw_response
 
         return deserialized
-    create_lineage.metadata = {'url': '/api/atlas_relationships_create'}
+    create_lineage_data.metadata = {'url': '/api/atlas_lineage_create'}
