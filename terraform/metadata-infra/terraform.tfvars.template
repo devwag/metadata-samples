@@ -1,0 +1,22 @@
+# Create a terraform.tfvars file and replace the below values
+
+base_storage_account_name = <Insert name of storage account deployed in base or preexisting storage account name>
+base_resource_group_name = <Insert name of resource group deployed in base or preexisting resource group name>
+base_vnet_name = <Insert name of vnet deployed in base or preexisting vnet name>
+base_user_assigned_identity_name = <Insert name of user assigned identity deployed in base or preexisting name>
+base_keyvault_name = <Insert name of your key vault>
+base_acr_name = <Insert name of your ACR>
+
+resouce_group_name = <Insert resource group name> 
+location = <Insert location> # Note: ADLS & Databricks have specific location requirements. Defaults to East US2
+databricks_name = <Insert databricks name>
+atlas_dns_name = <Insert hostname for atlas> 
+data_factory_name = <Insert name for ADF> 
+
+app_service_plan_name = <Insert name of app service plans> # Defaults to azure-functions-service-plan
+app_service_plan_location = <Insert location of app service plans> # Defaults to East US
+
+func_app_service_plan_tier = <Insert tier of app service plan hosting functions> # Defaults to ElasticPremium
+func_app_service_plan_size = <Insert size of app service plan hosting functions> # Defaults to EP1
+web_app_service_plan_tier = <Insert tier of app service plan hosting webapp> # Defaults to PremiumV2
+web_app_service_plan_size = <Insert size of app service plan hosting webapp> # Defaults to P1v2
