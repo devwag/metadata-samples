@@ -1,0 +1,13 @@
+dqProfileApp:
+  mssql:
+    username: ""
+    password: ""
+spring:
+  application:
+    name: "DQ Profiler App"
+  main:
+    web-application-type: none
+  datasource:
+    jdbcUrl: "jdbc:sqlserver://nischaysignitetest.database.windows.net:1433;database=ignitetest"
+    username: "${dqProfileApp.mssql.username}"
+    password: "${dqProfileApp.mssql.password}"
