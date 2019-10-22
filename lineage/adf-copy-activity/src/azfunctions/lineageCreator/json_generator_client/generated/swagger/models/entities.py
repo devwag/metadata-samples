@@ -8,25 +8,29 @@
 from msrest.serialization import Model
 
 
-class Model1ArrayEnd1(Model):
-    """Model1ArrayEnd1.
+class Entities(Model):
+    """Entities.
 
-    :param guid:
-    :type guid: str
     :param type_name:
     :type type_name: str
-    :param unique_attributes:
-    :type unique_attributes: object
+    :param guid:
+    :type guid: int
+    :param created_by:
+    :type created_by: str
+    :param attributes:
+    :type attributes: ~swagger.models.Attributes
     """
 
     _attribute_map = {
-        'guid': {'key': 'guid', 'type': 'str'},
         'type_name': {'key': 'typeName', 'type': 'str'},
-        'unique_attributes': {'key': 'uniqueAttributes', 'type': 'object'},
+        'guid': {'key': 'guid', 'type': 'int'},
+        'created_by': {'key': 'createdBy', 'type': 'str'},
+        'attributes': {'key': 'attributes', 'type': 'Attributes'},
     }
 
     def __init__(self, **kwargs):
-        super(Model1ArrayEnd1, self).__init__(**kwargs)
-        self.guid = kwargs.get('guid', None)
+        super(Entities, self).__init__(**kwargs)
         self.type_name = kwargs.get('type_name', None)
-        self.unique_attributes = kwargs.get('unique_attributes', None)
+        self.guid = kwargs.get('guid', None)
+        self.created_by = kwargs.get('created_by', None)
+        self.attributes = kwargs.get('attributes', None)

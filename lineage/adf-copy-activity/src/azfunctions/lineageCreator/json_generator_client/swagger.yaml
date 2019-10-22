@@ -4,9 +4,9 @@ info:
   version: '0.1'
   title: JsonGeneratorClient
 paths:
-  /api/atlas_relationships_create:
+  /api/atlas_lineage_create:
     post:
-      operationId: createLineage
+      operationId: createLineageData
       consumes:
         - application/json
       produces:
@@ -16,106 +16,112 @@ paths:
           name: body
           required: false
           schema:
-            $ref: '#/definitions/Model0'
+            $ref: '#/definitions/Request'
           x-examples:
             application/json: >-
-              [{"end1": {"guid": "e6e61138-acd9-48c4-bcb3-28696bfb5adc",
-              "typeName": "azure_cosmosdb_account", "uniqueAttributes": {}},
-              "end2": {"guid": "5932beae-352d-414d-b09f-7e522a4d6456",
-              "typeName": "azure_cosmosdb_database", "uniqueAttributes": {}},
-              "homeId": "3de748df-f73d-43e7-8d50-0331f17d9457", "label": "Azure
-              Cosmos DB Account to Azure Cosmos DB Database", "status":
-              "ACTIVE", "typeName": "cosmosdb_account_database", "name":
-              "relationshipbetweencosmosaccountanddb"}]
+              { "name": "derived_from_col_dq", "type_name": "derived_from_col",
+              "qualified_name":
+              "process/derived_from_col/dqrule/azure_sql_column", "created_by":
+              "sg", "process_attributes": [{"attr_name": "StartTime",
+              "attr_value": "10:40:09", "is_entityref": false}, {"attr_name":
+              "EndTime", "attr_value": "10:50:09", "is_entityref": false}],
+              "inputs": [{"guid": "ddb2bc49-af2a-41e3-9b26-0c6bec90e0d6",
+              "typeName": "azure_sql_column_sg"}], "outputs": [{"guid":
+              "faf02429-9fbf-4d97-b0d9-35a8dd6887bd", "typeName": "DQ_Rule_1"},
+              {"guid": "674aeda1-6f7d-4d61-9910-188b9050ed52", "typeName":
+              "DQ_Rule_1"}]}
       responses:
         '200':
           description: Definition generated from Swagger Inspector
           schema:
-            $ref: '#/definitions/Model1'
+            $ref: '#/definitions/Response'
 definitions:
-  UniqueAttributes: {}
-  End1:
+  Process_attributes:
+    properties:
+      attr_name:
+        type: string
+      attr_value:
+        type: string
+      is_entityref:
+        type: boolean
+  Inputs:
     properties:
       guid:
         type: string
       typeName:
         type: string
-      uniqueAttributes:
-        $ref: '#/definitions/UniqueAttributes'
-  End2_UniqueAttributes: {}
-  End2:
+  Outputs:
     properties:
       guid:
         type: string
       typeName:
         type: string
-      uniqueAttributes:
-        $ref: '#/definitions/End2_UniqueAttributes'
-  Array:
-    properties:
-      end1:
-        $ref: '#/definitions/End1'
-      end2:
-        $ref: '#/definitions/End2'
-      homeId:
-        type: string
-      label:
-        type: string
-      status:
-        type: string
-      typeName:
-        type: string
-      name:
-        type: string
-  Model0:
-    type: array
-    items:
-      $ref: '#/definitions/Array'
-  Model1_Array_End1_UniqueAttributes: {}
-  Model1_Array_End1:
-    properties:
-      guid:
-        type: string
-      typeName:
-        type: string
-      uniqueAttributes:
-        $ref: '#/definitions/Model1_Array_End1_UniqueAttributes'
-  Model1_Array_End2_UniqueAttributes: {}
-  Model1_Array_End2:
-    properties:
-      guid:
-        type: string
-      typeName:
-        type: string
-      uniqueAttributes:
-        $ref: '#/definitions/Model1_Array_End2_UniqueAttributes'
-  Model1_Array:
+  Request:
     properties:
       name:
         type: string
-      end1:
-        $ref: '#/definitions/Model1_Array_End1'
-      end2:
-        $ref: '#/definitions/Model1_Array_End2'
+      type_name:
+        type: string
+      qualified_name:
+        type: string
+      created_by:
+        type: string
+      process_attributes:
+        type: array
+        items:
+          $ref: '#/definitions/Process_attributes'
+      inputs:
+        type: array
+        items:
+          $ref: '#/definitions/Inputs'
+      outputs:
+        type: array
+        items:
+          $ref: '#/definitions/Outputs'
+  Attributes_Inputs:
+    properties:
+      guid:
+        type: string
       typeName:
         type: string
-      createTime:
+  Attributes_Outputs:
+    properties:
+      guid:
+        type: string
+      typeName:
+        type: string
+  Attributes:
+    properties:
+      inputs:
+        type: array
+        items:
+          $ref: '#/definitions/Attributes_Inputs'
+      outputs:
+        type: array
+        items:
+          $ref: '#/definitions/Attributes_Outputs'
+      qualifiedName:
+        type: string
+      name:
+        type: string
+      StartTime:
+        type: string
+      EndTime:
+        type: string
+  Entities:
+    properties:
+      typeName:
+        type: string
+      guid:
         type: integer
         format: int32
       createdBy:
         type: string
-      homeId:
-        type: string
-      label:
-        type: string
-      status:
-        type: string
-      updateTime:
-        type: integer
-        format: int32
-      updatedBy:
-        type: string
-  Model1:
-    type: array
-    items:
-      $ref: '#/definitions/Model1_Array'
+      attributes:
+        $ref: '#/definitions/Attributes'
+  Response:
+    properties:
+      entities:
+        type: array
+        items:
+          $ref: '#/definitions/Entities'
