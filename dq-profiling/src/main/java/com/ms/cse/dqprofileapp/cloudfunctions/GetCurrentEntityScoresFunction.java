@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Function;
 
 @Component
-public class GetCurrentEntityScores {
+public class GetCurrentEntityScoresFunction {
     @Autowired
     private EntityScoreRepository entityScoreRepository;
 
