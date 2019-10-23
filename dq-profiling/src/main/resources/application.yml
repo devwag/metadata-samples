@@ -1,5 +1,6 @@
 dqProfileApp:
   mssql:
+    url: ""
     username: ""
     password: ""
 spring:
@@ -8,6 +9,6 @@ spring:
   main:
     web-application-type: none
   datasource:
-    jdbcUrl: "jdbc:sqlserver://nischaysignitetest.database.windows.net:1433;database=ignitetest"
+    jdbcUrl: "${dqProfileApp.mssql.url}"
     username: "${dqProfileApp.mssql.username}"
     password: "${dqProfileApp.mssql.password}"
