@@ -1,5 +1,6 @@
 package com.ms.cse.dqprofileapp.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,11 +15,21 @@ public class RulesInfo {
     private String ruleName;
     private String dimension;
     private String columnName;
+
+    @Column(name = "Rule Description")
     private String ruleDescription;
+
+    @Column(name = "Business Rule Name")
     private String businessRuleName;
+
+    @Column(name = "Update Timestamp")
     private Timestamp updateTimestamp;
     private String ruleType;
+
+    @Column(name = "TABLE_FQDN")
     private String tableFQDN;
+
+    @Column(name = "COLUMN_FQDN")
     private String columnFQDN;
     private String tableName;
     private String ruleDefinition;
