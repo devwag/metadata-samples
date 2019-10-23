@@ -16,13 +16,13 @@ public class RulesInfo {
     private String dimension;
     private String columnName;
 
-    @Column(name = "Rule Description")
+    @Column(name = "\"Rule Description\"")
     private String ruleDescription;
 
-    @Column(name = "Business Rule Name")
+    @Column(name = "\"Business Rule Name\"")
     private String businessRuleName;
 
-    @Column(name = "Update Timestamp")
+    @Column(name = "\"Update Timestamp\"")
     private Timestamp updateTimestamp;
     private String ruleType;
 
