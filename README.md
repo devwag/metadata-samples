@@ -17,3 +17,7 @@ The meta-data manager built on Apache Atlas (ADC V2 compatible) will store the f
     1.	Lineage of each of the datasets created or copied over from source
     2.	Include the lineage on KPIs , with details around which specific columns/processes go into calculation of the KPI
     3.	Store the PBI dashboard details that the KPIs are displayed
+    
+### Architecture diagram:
+
+![Image of Architecture](https://github.com/devwag/metadata-samples/blob/master/images/GBS-ODS-MetaDataFramework.JPG)
