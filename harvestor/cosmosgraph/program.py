@@ -22,6 +22,16 @@ def httpPost(input_content, url):
     except Exception as e:        
         logging.error("error occured in calling" + e)
 
+def count_vertices(client):
+    print("\tRunning this Gremlin query:\n\t{0}".format(
+        _gremlin_count_vertices))
+    callback = client.submitAsync(_gremlin_count_vertices)
+    if callback.result() is not None:
+        print("\tCount of vertices: {0}".format(callback.result().one()))
+    else:
+        print("Something went wrong with this query: {0}".format(
+            _gremlin_count_vertices))
+    print("\n")
 
 def getQualifiedName(cosmosdb_uri, cosmosdb_database, container_name, qns_url):
     qns_request_obj ={
@@ -42,11 +52,14 @@ with open('settings.json') as config_file:
 cosmos_client_url= settings['ENDPOINT']
 cosmos_collection_path= settings['COLLECTION']
 cosmos_primary_key= settings['PRIMARYKEY']
+_gremlin_count_vertices = "g.V().count()"
+
+print(cosmos_client_url)
 
 try:
 
     # Initialize the Cosmos client
-    client = cosmos_client.CosmosClient(url_connection=cosmos_client_url, auth={'masterKey': cosmos_primary_key}) 
+    #client = cosmos_client.CosmosClient(url_connection=cosmos_client_url, auth={'masterKey': cosmos_primary_key}) 
     #entity_final = []  
     client = client.Client(cosmos_client_url, 'g',
                            username=cosmos_collection_path,
@@ -55,6 +68,7 @@ try:
                            )
 
     # List the databases
+    count_vertices(client)
     dblist = client.ReadDatabases( options=None)
     for db in dblist:
         #print(db.values())
