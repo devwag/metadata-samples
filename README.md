@@ -1,6 +1,8 @@
 # Metadata - Lineage - DQ  framework
+The framework consists of 4 primary components: Meta-Data Manager, Metadata Harvestor, Lineage Creator and DQ Rules & Metrics upload engine.
 
-The meta-data manager built on Apache Atlas (ADC V2 compatible) will store the following information:
+### Metadata Manager:
+The meta-data manager is built on Apache Atlas (ADC V2 compatible). It consists of Qualified Name Service, Apache Atlas JSON creator and Atlas API wrapper. It will store the following information:
 1.	Business metadata: These are business terms and glossaries that will be defined by the data stewards in Walmart Inc in Collibra. A third party software purchased by Walmart and deployed on premise.
 2.	Technical metadata: Technical metadata will be used by devs and applications to discover & explore datasets and will consist of the following hierarchy of information:
     1. Table name/Dataset names
